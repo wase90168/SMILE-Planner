@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<div th:replace="~{includes/bootstrapMeta :: bootstrapMeta}" />
+<title>Employee Manager</title>
+<div th:replace="~{includes/bootstrapCSS :: bootstrapCSS}" />
+</head>
+<body>
+	<div class="container" role="main">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				Unsanitized: <span th:text="${unsanitized}"></span>
+			</div>
+			<div class="col-md-4 col-md-offset-4">
+				Sanitized: <span th:text="${sanitized}"></span>
+			</div>
+		</div>
+	</div>
+	<!--  End of container -->
+
+	<div th:replace="~{includes/bootstrapJS :: bootstrapJS}" />
+</body>
+</html>
