@@ -26,6 +26,8 @@
 
 	<!-- JSR-303/JSR-349 support will be detected on classpath and enabled automatically -->
 	<mvc:annotation-driven />
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	
 
 
 	<!-- SpringResourceTemplateResolver automatically integrates with Spring's 
