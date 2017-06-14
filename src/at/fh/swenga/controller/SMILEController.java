@@ -21,7 +21,7 @@ import at.fh.swenga.model.EmployeeManager;
 import at.fh.swenga.model.EmployeeModel;
 
 @Controller
-public class EmployeeManagerController {
+public class SMILEController {
 	@Autowired
 	private EmployeeManager employeeManager;
 	
