@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Include Meta Information -->
+    <div th:replace="~{includes/bootstrapMeta :: bootstrapMeta}" />
+
 
     <title>SMILE Planner </title>
-    <div th:replace="~{includes/bootstrapMeta :: bootstrapMeta}" />
      <div th:replace="~{includes/bootstrapCSS :: bootstrapCSS}" />
 
     <!-- Bootstrap -->
@@ -382,61 +379,17 @@
         </div>
         <!-- /page content -->
           
-<!-- -------------------------------------------------------------------------------------------------------------------------
-                                                BEGIN FOOTER
------------------------------------------------------------------------------------------------------------------------------ -->
+<!---------------------------------------------------------------------------------------------------------------------------
+                                               / FOOTER & JAVASCRIPT /
+------------------------------------------------------------------------------------------------------------------------------->
 
-        <!-- footer content -->
-        <footer>
-          <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-          </div>
-          <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
+		<div th:replace="~{includes/footer :: footer}" />
+
+         <!-- Include JavaScript -->
+		<div th:replace="~{includes/bootstrapJS :: bootstrapJS}" />
+		
+		
       </div>
     </div>
-
-    <!-- jQuery -->
-    <script src="http://obsidion.at/vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="http://obsidion.at/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="http://obsidion.at/vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="http://obsidion.at/vendors/nprogress/nprogress.js"></script>
-    <!-- Chart.js -->
-    <script src="http://obsidion.at/vendors/Chart.js/dist/Chart.min.js"></script>
-    <!-- gauge.js -->
-    <script src="http://obsidion.at/vendors/gauge.js/dist/gauge.min.js"></script>
-    <!-- bootstrap-progressbar -->
-    <script src="http://obsidion.at/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-    <!-- iCheck -->
-    <script src="http://obsidion.at/vendors/iCheck/icheck.min.js"></script>
-    <!-- Skycons -->
-    <script src="http://obsidion.at/vendors/skycons/skycons.js"></script>
-    <!-- Flot -->
-    <script src="http://obsidion.at/vendors/Flot/jquery.flot.js"></script>
-    <script src="http://obsidion.at/vendors/Flot/jquery.flot.pie.js"></script>
-    <script src="http://obsidion.at/vendors/Flot/jquery.flot.time.js"></script>
-    <script src="http://obsidion.at/vendors/Flot/jquery.flot.stack.js"></script>
-    <script src="http://obsidion.at/vendors/Flot/jquery.flot.resize.js"></script>
-    <!-- Flot plugins -->
-    <script src="http://obsidion.at/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-    <script src="http://obsidion.at/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-    <script src="http://obsidion.at/vendors/flot.curvedlines/curvedLines.js"></script>
-    <!-- DateJS -->
-    <script src="http://obsidion.at/vendors/DateJS/build/date.js"></script>
-    <!-- JQVMap -->
-    <script src="http://obsidion.at/vendors/jqvmap/dist/jquery.vmap.js"></script>
-    <script src="http://obsidion.at/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-    <script src="http://obsidion.at/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-    <!-- bootstrap-daterangepicker -->
-    <script src="http://obsidion.at/vendors/moment/min/moment.min.js"></script>
-    <script src="http://obsidion.at/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-
-    <!-- Custom Theme Scripts -->
-    <script src="http://obsidion.at/build/js/custom.min.js"></script>
-	
   </body>
 </html>
