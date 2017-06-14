@@ -25,10 +25,10 @@ public class SMILEController {
 	@Autowired
 	private EmployeeManager employeeManager;
 	
-	@RequestMapping(value = { "/", "listEmployees" })
+	@RequestMapping(value = { "/", "index" })
 	public String showAllEmployees(Model model) {
 		model.addAttribute("employees", employeeManager.getAllEmployees());
-		return "listEmployees";
+		return "index";
 	}
 	
 	@RequestMapping("/fillEmployeeList")
@@ -42,7 +42,7 @@ public class SMILEController {
 		employeeManager.addEmployee(new EmployeeModel(5, "Maria", "Noname", now));
 		employeeManager.addEmployee(new EmployeeModel(6, "Josef", "Noname", now));
  
-		return "forward:/listEmployees";
+		return "forward:/index";
 	}
 	
 	@RequestMapping("/deleteEmployee")

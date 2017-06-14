@@ -66,12 +66,26 @@
         <div class="right_col" role="main">
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="page-header">
-			     <h1>SMILE Planner Dashboard</h1>
-		      </div>
+            <div class="page-header" style="padding-bottom:20px;">
+           		 <img th:src="@{resources/logo_fh.jpg}" width="300px" style="float:right">
+			     <h1>SMILE Planner Dashboard Index</h1>
+		    </div>
+		   </div>
+		  </div>
+		
+		  
+      <!---------------------- Include Project List ------------------------------>
+        	<div th:replace="~{includes/projectListModule :: projectListModule}" />
+      <!--------------------- /top navigation ------------------------------->
+		  
+		  		  
             
 <!---------------------------------  SMILE PLANNER CODE ------------------------------------------>      
-                
+         
+        <div class="row">
+           <div class="col-md-12 col-sm-12 col-xs-12">
+           <h2>Employee Manager</h2>
+           
         <!--  Error message ----------------------------------------------------------- -->
 		<div th:unless="${errorMessage} == null" th:utext="${errorMessage}"
 			class="alert alert-danger" role="alert"></div>
@@ -90,9 +104,7 @@
 
 		<nav th:replace="~{includes/searchNav :: search}"></nav>
 		
-		<div class="page-header">
-			<img th:src="@{resources/logo_fh.jpg}">
-		</div>
+
 
 		<!--  2 simple buttons ----------------------------------------------------------- -->
 		<div class="row">
@@ -157,12 +169,12 @@
 		
 <!--- /////////---------------- / END SMILE PLANNER CODE ------------------------------------------>      
 		
-                         
-            </div>
-          </div>
+              </div>
+		  </div>          
+
           <br/>
 
-        </div>
+       </div>
         <!-- /page content -->
           
           
