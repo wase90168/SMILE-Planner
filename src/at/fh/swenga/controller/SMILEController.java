@@ -49,6 +49,12 @@ public class SMILEController {
 		return "project_detail";
 	}
 	
+	// No idea what I#m doing but it seems to work...
+	@RequestMapping(value = { "/createNewProject" })
+	public String forwardCreateNewProject() {
+		return "createNewProject";
+	}
+	
 	@RequestMapping("/fillEmployeeList")
 	public String fillEmployeeList() {
  
