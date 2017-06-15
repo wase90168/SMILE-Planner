@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import at.fh.swenga.model.EmployeeManager;
 import at.fh.swenga.model.EmployeeModel;
@@ -29,6 +30,12 @@ import at.fh.swenga.model.EmployeeModel;
 public class SMILEController {
 	@Autowired
 	private EmployeeManager employeeManager;
+	
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	  if (!registry.hasMappingForPattern("/resources/**")) {
+	     registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/resources/");
+	  }
+	}
 	
 	@RequestMapping(value = { "/", "index" })
 	public String showAllEmployees(Model model) {
