@@ -40,7 +40,7 @@ public class SMILEController {
 	@RequestMapping(value = { "/", "index" })
 	public String showAllEmployees(Model model) {
 		model.addAttribute("employees", employeeManager.getAllEmployees());
-		return "index";
+		return "project_detail";
 	}
 	
 	@RequestMapping("/fillEmployeeList")
