@@ -1,0 +1,14 @@
+###############################################################################
+    Sammlung für Probleme die mir während der Entwicklung einfallen
+###############################################################################
+    
+
+
+createNewProject.html
+------------------------------
+- Beschreibung sollte mehr als 45 Zeichen haben dürfen.
+	Keine Maximallänge eingestellt. Könnte Probleme mit Datenbank verursachen 
+
+
+
+
