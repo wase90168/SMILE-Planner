@@ -40,6 +40,12 @@ public class SMILEController {
 	@RequestMapping(value = { "/", "index" })
 	public String showAllEmployees(Model model) {
 		model.addAttribute("employees", employeeManager.getAllEmployees());
+		return "index";
+	}
+	
+	// No idea what I#m doing but it seems to work...
+	@RequestMapping(value = { "/project_detail" })
+	public String forwardProjectDetailsPage() {
 		return "project_detail";
 	}
 	
