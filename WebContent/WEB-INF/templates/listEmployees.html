@@ -282,6 +282,14 @@
 ----------------------------------------------------------------------------------------------------------------------------- -->
           
           
+<!-- Testmaterial START --> 
+
+
+
+
+
+<!-- Testmaterial ENDE -->         
+          
           
         <div class="right_col" role="main">
           <div class="row">
@@ -314,7 +322,7 @@
 					<a href="addEmployee">
 						<button type="button" class="btn btn-success">Add new
 							Employee</button>
-					</a> <a href="fillEmployeeList">
+					</a> <a href="fillUserList">
 						<button type="button" class="btn btn-success">Fill List</button>
 					</a>
 				</p>
@@ -328,21 +336,24 @@
 				<table data-toggle="table" class="table table-striped">
 					<thead>
 						<tr>
-							<th data-sortable="true">SSN</th>
-							<th data-sortable="true">First Name</th>
-							<th data-sortable="true">Last Name</th>
-							<th data-sortable="true">Day of birth</th>
+							<!--<th data-sortable="true">SSN</th> -->
+							<th data-sortable="true">Username</th>
+							<th data-sortable="true">Firstname</th>
+							<th data-sortable="true">Lastname</th>
+							<th data-sortable="true">Lastname</th>
+							<th data-sortable="true">Active</th>
+							<th data-sortable="true">ToDo</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
 						<!--  list all items ----------------------------------------------------------- -->
-						<tr th:each="employee : ${#request.getAttribute('employees')}">
-							<td th:text="${employee.ssn}"></td>
-							<td th:text="${employee.firstName}"></td>
-							<td th:text="${employee.lastName}"></td>
-							<td
-								th:text="${#calendars.format(employee.dayOfBirth,'dd.MM.yyyy')}"></td>
+						<tr th:each="user : ${#request.getAttribute('users')}">
+						<td th:text="${employee.username}"></td>
+						<td th:text="${employee.firstName}"></td>
+						<td th:text="${employee.lastName}"></td>
+						<td th:text="${employee.active}"></td>
+						<td th:text="${employee.toDo}"></td>
 							<td><span sec:authorize="hasRole('Admin')"> <a
 									th:href="@{/deleteEmployee(ssn=${employee.ssn})}">
 										<button type="button" class="btn btn-xs btn-danger">
