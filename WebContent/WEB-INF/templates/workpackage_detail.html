@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Include Meta Information -->
+    <div th:replace="~{includes/bootstrapMeta :: bootstrapMeta}" />
+
+    <title>SMILE Planner </title>
+    
+    <!-- --------------  Include CSS Files ------------------------->
+     <div th:replace="~{includes/bootstrapCSS :: bootstrapCSS}" />
+     <!-- --------------  /Include CSS Files ------------------------->
+    
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+
+
+            <!-- --------------  menu profile quick info ------------------------->
+			<div th:replace="~{includes/pageFragments :: sideBarProfile}" />
+            <!------------------ /menu profile quick info ------------------------->
+            <br />
+
+			<!-- --------------------- sidebar menu ------------------------------->
+			<div th:replace="~{includes/pageFragments :: sideBarMenu}" />
+			 <!---------------------- /sidebar menu ------------------------------->
+
+            <!---------------------- menu footer buttons -------------------------->
+			<div th:replace="~{includes/pageFragments :: menuFooterButtons}" />
+            <!---------------------- /menu footer buttons -------------------------> 
+          </div>
+        </div>
+
+       		 <!---------------------- top navigation ------------------------------>
+        	<div th:replace="~{includes/pageFragments :: topRightNav}" />
+       		 <!--------------------- /top navigation ------------------------------->
+
+
+<!-- -------------------------------------------------------------------------------------------------------------------------
+                                                PAGE Content
+----------------------------------------------------------------------------------------------------------------------------- -->
+          
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Workpackage Name</h3>
+              </div>
+
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Workpackage Details</h2>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+                  
+                    <!-- start project-detail sidebar -->
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <section class="panel">
+
+                        <div class="panel-body">
+                         
+
+                          <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terr.</p>
+                          <br />
+
+                          <div class="project_detail">
+                            <p class="title">Project Leader</p>
+                            <p>Deveint Inc</p>
+                            <p class="title">Project Members</p>
+                            <ul>
+                            <li>Peter Scalhofer</li>
+                            <li>Mitt Romny</li>
+                            </ul>
+                            <br>
+                            <a class="btn btn-info btn-md btn-block" href="#">Edit</a>
+                          </div>
+                        </div>
+
+                      </section>
+
+                    </div>
+                    <!-- end project-detail sidebar -->
+                  
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    <br>
+	                      <form id="workpackage_infos" data-parsley-validate class="form-horizontal form-label-left">
+	                      <div class="form-group">
+	                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Status</label>
+	                        <div class="col-md-6 col-sm-6 col-xs-12">
+		                        <select class="form-control col-md-7 col-xs-12" id="status">
+								    <option>Not started</option>
+								    <option>In progress</option>
+								    <option>Done</option>
+								    <option>Delayed</option>
+								    <option>Waiting</option>
+								</select>
+	                        </div>
+	                      </div>
+	                      
+	                      <div class="form-group">
+	                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Progress (%) 
+	                        </label>
+	                        <div class="col-md-6 col-sm-6 col-xs-12">
+	                          <input type="number" min="0" max="100" id="progress" name="progress" required="required" class="form-control col-md-7 col-xs-12">
+	                        </div>
+	                      </div>
+	                      
+	                      <div class="form-group">
+	                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Current Worktime (hours)
+	                        </label>
+	                        <div class="col-md-6 col-sm-6 col-xs-12">
+	                          <input type="number" min="0" id="worktime" name="worktime" required="required" class="form-control col-md-7 col-xs-12">
+	                        </div>
+	                      </div>	
+	                      
+	                      <div class="form-group">
+	                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Total current costs (&euro;)
+	                        </label>
+	                        <div class="col-md-6 col-sm-6 col-xs-12">
+	                          <input type="number" min="0" id="current_costs" name="current_costs" required="required" class="form-control col-md-7 col-xs-12">
+	                        </div>
+	                      </div>                      
+
+	                      <div class="ln_solid"></div>
+	                      <div class="form-group">
+	                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+	                          <button class="btn btn-primary" type="button">Cancel</button>
+	                          <button type="submit" class="btn btn-success">Update Workpackage</button>
+	                        </div>
+	                      </div>
+	                    </form>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            
+            
+            
+          </div>
+        </div>
+        <!-- /page content -->
+
+          
+          
+          
+<!---------------------------------------------------------------------------------------------------------------------------
+                                               / FOOTER & JAVASCRIPT /
+------------------------------------------------------------------------------------------------------------------------------->
+
+		<div th:replace="~{includes/pageFragments :: footer}" />
+
+         <!-- Include JavaScript -->
+		<div th:replace="~{includes/bootstrapJS :: bootstrapJS}" />
+		
+		 <!-- ECharts Additional Script -->
+   		 <script th:src="@{resources/vendors/echarts/dist/echarts.min.js}"></script>
+   		 
+		
+		
+      </div>
+    </div>
+  </body>
+</html>
