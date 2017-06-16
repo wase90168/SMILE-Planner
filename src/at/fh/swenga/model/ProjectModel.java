@@ -28,28 +28,28 @@ public class ProjectModel implements java.io.Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idproject;
 	
-	@Column(nullable = false, length = 45)
+	@Column(nullable = true, length = 45)
 	private String name;
 	 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private float budget;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	@Temporal(TemporalType.DATE)
-	private Calendar deadline;
+	private String deadline;
 	
 	@Column (nullable = true)
 	@Temporal(TemporalType.DATE)
-	private Calendar realEnd;
+	private String realEnd;
 	
-	@Column(nullable = false, length = 45)
+	@Column(nullable = true, length = 45)
 	private String description;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private int status;
 	
 	@Column(nullable = true)
-	private int progress;
+	private float progress;
 
 	
 	@Column(nullable = false, length = 45)
@@ -63,8 +63,8 @@ public class ProjectModel implements java.io.Serializable {
 	private MilestoneModel milestone;
 	
 	
-	public ProjectModel(String name, float budget, Calendar deadline, Calendar realEnd, String description, int status,
-			String lastChanged, int progress) {
+	public ProjectModel(String name, float budget, String deadline, String realEnd, String description, int status,
+			String lastchange, float progress) {
 		super();
 		this.name = name;
 		this.budget = budget;
@@ -72,7 +72,7 @@ public class ProjectModel implements java.io.Serializable {
 		this.realEnd = realEnd;
 		this.description = description;
 		this.status = status;
-		this.lastChanged = lastChanged;
+		this.lastChanged = lastchange;
 		this.progress = progress;
 	}
 
@@ -100,19 +100,19 @@ public class ProjectModel implements java.io.Serializable {
 		this.budget = budget;
 	}
 
-	public Calendar getDeadline() {
+	public String getDeadline() {
 		return deadline;
 	}
 
-	public void setDeadline(Calendar deadline) {
+	public void setDeadline(String deadline) {
 		this.deadline = deadline;
 	}
 
-	public Calendar getRealEnd() {
+	public String getRealEnd() {
 		return realEnd;
 	}
 
-	public void setRealEnd(Calendar realEnd) {
+	public void setRealEnd(String realEnd) {
 		this.realEnd = realEnd;
 	}
 
@@ -140,7 +140,7 @@ public class ProjectModel implements java.io.Serializable {
 		this.lastChanged = lastChanged;
 	}
 	
-	public int getProgress() {
+	public float getProgress() {
 		return progress;
 	}
 
