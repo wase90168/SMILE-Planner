@@ -61,6 +61,12 @@ public class SMILEController {
 		return "workpackage_detail";
 	}
 	
+	// No idea what I#m doing but it seems to work...
+	@RequestMapping(value = { "/createNewWorkpackage" })
+	public String forwardcreateNewWorkpackage() {
+		return "createNewWorkpackage";
+	}
+	
 	@RequestMapping("/fillEmployeeList")
 	public String fillEmployeeList() {
  
