@@ -58,19 +58,18 @@ public class WorkpackageModel implements java.io.Serializable{
 	@ManyToOne
 	private ProjectModel project;
 	
-	@ManyToOne
+	/*@ManyToOne
 	private MilestoneModel milestone;
 	
 	@ManyToOne
-	private UserModel user;
+	private UserModel user;*/
 	
 	public WorkpackageModel() {
 		
 	}
 
 	public WorkpackageModel(String name, int dauerStunden, float cost, String description, int status,
-			Calendar plannedBegin, Calendar actualBegin, Calendar plannedEnd, Calendar actualEnd, String toDo,
-			ProjectModel project, MilestoneModel milestone, UserModel user) {
+			Calendar plannedBegin, Calendar actualBegin, Calendar plannedEnd, Calendar actualEnd, String toDo, UserModel user) {
 		super();
 		this.name = name;
 		this.dauerStunden = dauerStunden;
@@ -83,8 +82,8 @@ public class WorkpackageModel implements java.io.Serializable{
 		this.actualEnd = actualEnd;
 		this.toDo = toDo;
 		this.project = project;
-		this.milestone = milestone;
-		this.user = user;
+		/*this.milestone = milestone;
+		this.user = user;*/
 	}
 
 	public int getIdworkpackage() {
@@ -183,15 +182,4 @@ public class WorkpackageModel implements java.io.Serializable{
 		this.project = project;
 	}
 
-	public MilestoneModel getMilestone() {
-		return milestone;
-	}
-
-	public void setMilestone(MilestoneModel milestone) {
-		this.milestone = milestone;
-	}
-	
-	
-	
-	
 }
