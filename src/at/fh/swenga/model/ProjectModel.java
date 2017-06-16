@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
 
 public class ProjectModel implements java.io.Serializable {
 
-
+	
 	@Id
 	@Column(name = "idproject")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +48,10 @@ public class ProjectModel implements java.io.Serializable {
 	@Column(nullable = false)
 	private int status;
 	
+	@Column(nullable = true)
+	private int progress;
+
+	
 	@Column(nullable = false, length = 45)
 	private String lastChanged;
 
@@ -60,7 +64,7 @@ public class ProjectModel implements java.io.Serializable {
 	
 	
 	public ProjectModel(String name, float budget, Calendar deadline, Calendar realEnd, String description, int status,
-			String lastChanged) {
+			String lastChanged, int progress) {
 		super();
 		this.name = name;
 		this.budget = budget;
@@ -69,6 +73,7 @@ public class ProjectModel implements java.io.Serializable {
 		this.description = description;
 		this.status = status;
 		this.lastChanged = lastChanged;
+		this.progress = progress;
 	}
 
 	public int getIdproject() {
@@ -134,6 +139,12 @@ public class ProjectModel implements java.io.Serializable {
 	public void setLastChanged(String lastChanged) {
 		this.lastChanged = lastChanged;
 	}
-
 	
+	public int getProgress() {
+		return progress;
+	}
+
+	public void setProgress(int progress) {
+		this.progress = progress;
+	}
 }
