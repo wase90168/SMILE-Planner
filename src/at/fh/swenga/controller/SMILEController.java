@@ -81,6 +81,18 @@ public class SMILEController {
 		return "createNewProject";
 	}
 	
+	// No idea what I#m doing but it seems to work...
+	@RequestMapping(value = { "/workpackage_detail" })
+	public String forwardWorkpackageDetail() {
+		return "workpackage_detail";
+	}
+	
+	// No idea what I#m doing but it seems to work...
+	@RequestMapping(value = { "/createNewWorkpackage" })
+	public String forwardcreateNewWorkpackage() {
+		return "createNewWorkpackage";
+	}
+	
 	@RequestMapping("/fillEmployeeList")
 	public String fillEmployeeList() {
  
