@@ -58,6 +58,7 @@
             <artifactId>thymeleaf-extras-springsecurity4</artifactId>
             <version>3.0.2.RELEASE</version>
         </dependency>
+<<<<<<< HEAD
         <dependency>
 		  <groupId>javax.persistence</groupId>
 		  <artifactId>persistence-api</artifactId>  
@@ -95,6 +96,8 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.2.4.Final</version>
 		</dependency>
+=======
+>>>>>>> 281303f4afc186053d07de6ac95b87d4e88490a2
     </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
