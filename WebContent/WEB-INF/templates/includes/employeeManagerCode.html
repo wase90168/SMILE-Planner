@@ -32,7 +32,7 @@
 					<a href="addEmployee">
 						<button type="button" class="btn btn-success">Add new
 							Employee</button>
-					</a> <a href="fillUserList">
+					</a> <a href="fillEmployeeList">
 						<button type="button" class="btn btn-success">Fill List</button>
 					</a>
 				</p>
@@ -46,20 +46,21 @@
 				<table data-toggle="table" class="table table-striped">
 					<thead>
 						<tr>
+							<th data-sortable="true">SSN</th>
 							<th data-sortable="true">First Name</th>
 							<th data-sortable="true">Last Name</th>
-							<th data-sortable="true">Username</th>
-							<th data-sortable="true">#Active</th>
-							<th data-sortable="true">#ToDo</th>
+							<th data-sortable="true">Day of birth</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
 						<!--  list all items ----------------------------------------------------------- -->
-						<tr th:each="user : ${#request.getAttribute('users')}">
-							<td th:text="${user.firstName}"></td>
-							<td th:text="${user.lastName}"></td>
-							<td th:text="${user.username}"></td>
+						<tr th:each="employee : ${#request.getAttribute('employees')}">
+							<td th:text="${employee.ssn}"></td>
+							<td th:text="${employee.firstName}"></td>
+							<td th:text="${employee.lastName}"></td>
+							<td
+								th:text="${#calendars.format(employee.dayOfBirth,'dd.MM.yyyy')}"></td>
 							<td><span sec:authorize="hasRole('Admin')"> <a
 									th:href="@{/deleteEmployee(ssn=${employee.ssn})}">
 										<button type="button" class="btn btn-xs btn-danger">
