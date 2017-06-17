@@ -6,13 +6,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -25,11 +24,33 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 
 import at.fh.swenga.model.EmployeeManager;
 import at.fh.swenga.model.EmployeeModel;
+import at.fh.swenga.model.ProjectModel;
+
 
 @Controller
 public class SMILEController {
+	
 	@Autowired
 	private EmployeeManager employeeManager;
+	
+	@RequestMapping(value = {"/newProject"}, method = RequestMethod.POST)
+	@Transactional
+	public String newProject(Model model,
+			@RequestParam String projectName, @RequestParam String budget,
+			@RequestParam String deadline, @RequestParam String plannedEnd, @RequestParam String description,
+			@RequestParam String status, @RequestParam String lastChange, @RequestParam String progress) {
+		
+		Float newBudget = Float.parseFloat(budget);
+		int newStatus = Integer.parseInt(status);
+		Float newProgress = Float.parseFloat(progress);
+		
+		
+		ProjectModel pm = new ProjectModel(projectName,newBudget,deadline,plannedEnd,description,newStatus,lastChange,newProgress);
+		System.out.println("Name:" + pm.getName());
+		
+		return "forward:/index";
+		
+	}
 	
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 	  if (!registry.hasMappingForPattern("/resources/**")) {
@@ -159,14 +180,14 @@ public class SMILEController {
  
 		return "forward:/listEmployees";
 	}
-	
+	/*
 	@RequestMapping(value = "/sanitize", method = RequestMethod.GET)
 	public String testSanitization(Model model) {
-		/* Teststrings:
-		 * <p><a href='http://example.com/' onclick='stealCookies()'>Link</a></p>
-		 * <img src='http://placehold.it/350x150' />
-		 * <script>alert(document.cookie)</script>
-		 */
+		// Teststrings:
+		 // <p><a href='http://example.com/' onclick='stealCookies()'>Link</a></p>
+		 // <img src='http://placehold.it/350x150' />
+		// <script>alert(document.cookie)</script>
+		 //
 		
 		String unsanitized = "<p><a href='http://example.com/' onclick='stealCookies()'>Link</a></p>";
 		String sanitized = Jsoup.clean(unsanitized, Whitelist.basic());
@@ -177,7 +198,7 @@ public class SMILEController {
 		model.addAttribute("unsanitized", unsanitized);
 		return "testSanitization";
 	}
-
+	 */
 	@ExceptionHandler(Exception.class)
 	public String handleAllException(Exception ex) {
 		return "showError";
@@ -196,6 +217,7 @@ public class SMILEController {
 		}
 		return "redirect:/login";
 	}
-
+	
+	
 
 }

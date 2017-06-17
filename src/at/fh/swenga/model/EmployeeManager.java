@@ -12,7 +12,10 @@ import org.springframework.stereotype.Repository;
 public class EmployeeManager {
  
 	private List<EmployeeModel> employees = new ArrayList<EmployeeModel>();
+
  
+	private List<ProjectModel> projects = new ArrayList<ProjectModel>();
+	
 	/**
 	 * Add employee to List
 	 * @param employee
@@ -20,7 +23,11 @@ public class EmployeeManager {
 	public void addEmployee(EmployeeModel employee) {
 		employees.add(employee);
 	}
- 
+	
+	public void addProject(ProjectModel project) {
+		projects.add(project);
+	}
+	
 	/**
 	 * Verify if list contains employee with same SSN
 	 * @param employee
