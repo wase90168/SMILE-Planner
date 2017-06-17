@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
+import at.fh.swenga.dao.ProjectRepository;
 import at.fh.swenga.model.EmployeeManager;
 import at.fh.swenga.model.EmployeeModel;
 import at.fh.swenga.model.ProjectModel;
@@ -32,6 +33,9 @@ public class SMILEController {
 	
 	@Autowired
 	private EmployeeManager employeeManager;
+	
+	@Autowired
+	private ProjectRepository projectRepository;
 	
 	@RequestMapping(value = {"/newProject"}, method = RequestMethod.POST)
 	@Transactional
@@ -47,6 +51,7 @@ public class SMILEController {
 		
 		ProjectModel pm = new ProjectModel(projectName,newBudget,deadline,plannedEnd,description,newStatus,lastChange,newProgress);
 		System.out.println("Name:" + pm.getName());
+		projectRepository.save(pm);
 		
 		return "forward:/index";
 		
