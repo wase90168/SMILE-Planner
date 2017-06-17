@@ -11,4 +11,12 @@ createNewProject.html
 
 
 
+16.06.2017 - David
+----------------------------
+- createNewWorkpackage (controller, repository, model, HTML) - erledigt
+- Models für die anderen DB-Objekte
+- Beziehungen zwischen den Tabellen/Modellen (Sebastian anrufen)
+
+- Nicht vergessen: ProjectModel nullable korrigieren
+
 
