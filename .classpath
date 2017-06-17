@@ -22,6 +22,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
@@ -67,5 +68,7 @@
 			<attribute name="maven.scope" value="compile"/>
 		</attributes>
 	</classpathentry>
+=======
+>>>>>>> 281303f4afc186053d07de6ac95b87d4e88490a2
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
