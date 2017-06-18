@@ -76,7 +76,7 @@ public class SMILEController {
 	 */
 	@RequestMapping(value = {"/newWorkpackage"}, method = RequestMethod.POST)
 	@Transactional
-	public String newProject(Model model,
+	public String newWorkpackage(Model model,
 			@RequestParam String workpackageName, @RequestParam String description, @RequestParam String responsible, 
 			@RequestParam String costs, @RequestParam String progress) {
 		
