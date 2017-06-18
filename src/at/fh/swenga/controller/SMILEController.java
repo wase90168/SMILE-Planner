@@ -1,6 +1,7 @@
 package at.fh.swenga.controller;
 
 import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -64,7 +65,6 @@ public class SMILEController {
 		
 		
 		ProjectModel pm = new ProjectModel(projectName,newBudget,deadline,plannedEnd,description,newStatus,lastChange,newProgress);
-		System.out.println("Name:" + pm.getName());
 		projectRepository.save(pm);
 		
 		return "forward:/index";
@@ -98,7 +98,6 @@ public class SMILEController {
 		
 	}
 	
-	
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 	  if (!registry.hasMappingForPattern("/resources/**")) {
 	     registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/resources/");
@@ -106,8 +105,9 @@ public class SMILEController {
 	}
 	
 	@RequestMapping(value = { "/", "index" })
-	public String showAllEmployees(Model model) {
-		model.addAttribute("employees", employeeManager.getAllEmployees());
+	public String showAllProjects(Model model) {
+		List<ProjectModel> projects = projectRepository.findAll();
+		model.addAttribute("projects", projects);
 		return "index";
 	}
 	
@@ -148,20 +148,14 @@ public class SMILEController {
 		return "forward:/index";
 	}
 	
-	@RequestMapping("/deleteEmployee")
-	public String delete(Model model, @RequestParam int ssn) {
-		boolean isRemoved = employeeManager.remove(ssn);
- 
-		if (isRemoved) {
-			model.addAttribute("warningMessage", "Employee " + ssn + " deleted");
-		} else {
-			model.addAttribute("errorMessage", "There is no Employee " + ssn);
-		}
- 
-		// Multiple ways to "forward" to another Method
-		// return "forward:/listEmployees";
-		return showAllEmployees(model);
+
+	@RequestMapping("/deleteProject")
+	public String delete(Model model, @RequestParam long id) {
+		projectRepository.removeByIdproject(id);
+		return "forward:index";
 	}
+	
+
 	
 	@RequestMapping("/searchEmployees")
 	public String search(Model model, @RequestParam String searchString) {
