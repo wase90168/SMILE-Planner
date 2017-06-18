@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import at.fh.swenga.dao.ProjectRepository;
+import at.fh.swenga.dao.WorkpackageRepository;
 import at.fh.swenga.model.EmployeeManager;
 import at.fh.swenga.model.EmployeeModel;
 import at.fh.swenga.model.ProjectModel;
+import at.fh.swenga.model.WorkpackageModel;
 
 
 @Controller
@@ -37,6 +39,12 @@ public class SMILEController {
 	@Autowired
 	private ProjectRepository projectRepository;
 	
+	@Autowired
+	private WorkpackageRepository workpackageRepository;
+	
+	/*
+	 * add new Project
+	 */
 	@RequestMapping(value = {"/newProject"}, method = RequestMethod.POST)
 	@Transactional
 	public String newProject(Model model,
@@ -44,7 +52,7 @@ public class SMILEController {
 			/*@RequestParam String deadline,@RequestParam String plannedEnd,*/  @RequestParam String description,
 			/*@RequestParam String status, @RequestParam String lastChange,*/ @RequestParam String progress) {
 		
-		/* Temporary test values */
+		/* Fields that are not in html form are added manually */
 		String status = "1";
 		String deadline = "1";
 		String plannedEnd = "2017-06-17";
@@ -62,6 +70,34 @@ public class SMILEController {
 		return "forward:/index";
 		
 	}
+	
+	/*
+	 * add new Workpackage
+	 */
+	@RequestMapping(value = {"/newWorkpackage"}, method = RequestMethod.POST)
+	@Transactional
+	public String newProject(Model model,
+			@RequestParam String workpackageName, @RequestParam String description, @RequestParam String responsible, 
+			@RequestParam String costs, @RequestParam String progress) {
+		
+		/* Fields that are not in html form are added manually */
+		String durationHours = "24";
+		int status = 1;
+		String plannedBegin = "2017-06-17";
+		String actualBegin = "2017-06-17";
+		String plannedEnd = "2017-10-17";
+		String actualEnd = "2017-10-17";
+		
+		int newProgress = Integer.parseInt(progress);
+		Float newCosts = Float.parseFloat(costs);
+		
+		WorkpackageModel wm = new WorkpackageModel(workpackageName, durationHours, newCosts, description, status, newProgress, plannedBegin, actualBegin, plannedEnd, actualEnd);
+		workpackageRepository.save(wm);
+		
+		return "forward:/index";
+		
+	}
+	
 	
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 	  if (!registry.hasMappingForPattern("/resources/**")) {
@@ -85,6 +121,11 @@ public class SMILEController {
 	@RequestMapping(value = { "/createNewProject" })
 	public String forwardCreateNewProject() {
 		return "createNewProject";
+	}
+	
+	@RequestMapping(value = { "/createNewWorkpackage" })
+	public String forwardCreateNewWorkpackage() {
+		return "createNewWorkpackage";
 	}
 	
 	@RequestMapping("/fillEmployeeList")
