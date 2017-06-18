@@ -14,5 +14,7 @@ import at.fh.swenga.model.ProjectModel;
 public interface ProjectRepository extends JpaRepository<ProjectModel, Integer>{
 
     public List<ProjectModel> removeByIdproject(long id);
+    
+    public ProjectModel findProjectByIdproject(long id);
 	
 }

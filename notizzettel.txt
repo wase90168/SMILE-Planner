@@ -23,4 +23,5 @@ createNewProject.html
 
 - Nicht vergessen: ProjectModel nullable korrigieren
 
+- Beim ID übertragen!!!! <input type="hidden" th:value="${project.idproject}" name="id">
 

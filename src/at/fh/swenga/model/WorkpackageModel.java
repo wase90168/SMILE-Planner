@@ -1,10 +1,12 @@
 package at.fh.swenga.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,6 +18,9 @@ public class WorkpackageModel implements java.io.Serializable {
 	@Column(name = "idworkpackages")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idworkpackages;
+	
+	@ManyToOne (cascade = CascadeType.PERSIST)
+	private ProjectModel project;
 	
 	@Column(nullable = true, length = 45)
 	private String name;
@@ -52,7 +57,7 @@ public class WorkpackageModel implements java.io.Serializable {
 	}
 
 	public WorkpackageModel(String name, String durationHours, float cost, String description, int status, int progress,
-			String plannedBegin, String actualBegin, String plannedEnd, String actualEnd) {
+			String plannedBegin, String actualBegin, String plannedEnd, String actualEnd, ProjectModel project) {
 		super();
 		this.name = name;
 		this.durationHours = durationHours;
@@ -64,6 +69,7 @@ public class WorkpackageModel implements java.io.Serializable {
 		this.actualBegin = actualBegin;
 		this.plannedEnd = plannedEnd;
 		this.actualEnd = actualEnd;
+		this.project = project;
 	}
 
 	public long getIdworkpackages() {
@@ -152,6 +158,14 @@ public class WorkpackageModel implements java.io.Serializable {
 
 	public void setActualEnd(String actualEnd) {
 		this.actualEnd = actualEnd;
+	}
+
+	public ProjectModel getProject() {
+		return project;
+	}
+
+	public void setProject(ProjectModel project) {
+		this.project = project;
 	}
 	
 	

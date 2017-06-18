@@ -78,7 +78,7 @@ public class SMILEController {
 	@Transactional
 	public String newWorkpackage(Model model,
 			@RequestParam String workpackageName, @RequestParam String description, @RequestParam String responsible, 
-			@RequestParam String costs, @RequestParam String progress) {
+			@RequestParam String costs, @RequestParam String progress, @RequestParam long id) {
 		
 		/* Fields that are not in html form are added manually */
 		String durationHours = "24";
@@ -88,13 +88,15 @@ public class SMILEController {
 		String plannedEnd = "2017-10-17";
 		String actualEnd = "2017-10-17";
 		
+		ProjectModel project = projectRepository.findProjectByIdproject(id);
+		
 		int newProgress = Integer.parseInt(progress);
 		Float newCosts = Float.parseFloat(costs);
 		
-		WorkpackageModel wm = new WorkpackageModel(workpackageName, durationHours, newCosts, description, status, newProgress, plannedBegin, actualBegin, plannedEnd, actualEnd);
+		WorkpackageModel wm = new WorkpackageModel(workpackageName, durationHours, newCosts, description, status, newProgress, plannedBegin, actualBegin, plannedEnd, actualEnd, project);
 		workpackageRepository.save(wm);
 		
-		return "forward:/index";
+		return "forward:/projectDetails";
 		
 	}
 	
@@ -111,9 +113,14 @@ public class SMILEController {
 		return "index";
 	}
 	
-	// No idea what I#m doing but it seems to work...
-	@RequestMapping(value = { "/project_detail" })
-	public String forwardProjectDetailsPage() {
+	// it works :)
+	@RequestMapping(value = { "/projectDetails" })
+	public String forwardProjectDetailsPage(Model model, @RequestParam long id) {
+		ProjectModel project = projectRepository.findProjectByIdproject(id);
+		List<WorkpackageModel> workpackages = workpackageRepository.findWorkpackagesByProject(project);
+		
+		model.addAttribute("workpackages", workpackages);
+		model.addAttribute("project", project);
 		return "project_detail";
 	}
 	
@@ -129,8 +136,10 @@ public class SMILEController {
 		return "createNewProject";
 	}
 	
-	@RequestMapping(value = { "/createNewWorkpackage" })
-	public String forwardCreateNewWorkpackage() {
+	@RequestMapping(value = { "/newWorkpackage"}, method = RequestMethod.GET)
+	public String forwardCreateNewWorkpackage(Model model, @RequestParam long id) {
+		ProjectModel project = projectRepository.findProjectByIdproject(id);
+		model.addAttribute("project",project);
 		return "createNewWorkpackage";
 	}
 	

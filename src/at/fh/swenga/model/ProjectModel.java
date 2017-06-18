@@ -1,11 +1,15 @@
 package at.fh.swenga.model;
 
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -45,6 +49,10 @@ public class ProjectModel implements java.io.Serializable {
 	@Column(nullable = false, length = 45)
 	private String lastChanged;
 
+	@OneToMany(cascade = CascadeType.PERSIST)
+	private List<WorkpackageModel> workpackage;
+	
+	
 	public ProjectModel() {
 		super();
 	}	

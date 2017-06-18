@@ -44,11 +44,11 @@
 ----------------------------------------------------------------------------------------------------------------------------- -->
           
         <!-- page content -->
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" th:each="project : ${#request.getAttribute('project')}">
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Project Name</h3>
+                <h3 th:text="${project.name}"></h3>
               </div>
 
               <div class="title_right">
@@ -79,11 +79,11 @@
 							<ul class="stats-overview">
 		                        <li>
 		                          <span class="name"> Budget </span>
-		                          <span class="value text-success"> 2300 </span>
+		                          <span class="value text-success" th:text="${project.budget}"></span>
 		                        </li>
 		                        <li>
 		                          <span class="name"> Total amount spent </span>
-		                          <span class="value text-success"> 2000 </span>
+		                          <span class="value text-success"> (Existiert in Class nicht)</span>
 		                        </li>
 		                        <li class="hidden-phone">
 		                          <span class="name"> Estimated project duration </span>

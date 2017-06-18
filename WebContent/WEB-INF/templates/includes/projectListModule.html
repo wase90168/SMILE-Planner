@@ -60,7 +60,7 @@
                           </td>
                           <td class="project_progress">
                             <div class="progress progress_sm">
-                              <div class="progress-bar bg-green" role="progressbar" th.with="data-transitiongoal=${project.progress}"></div>
+                              <div class="progress-bar bg-green" role="progressbar" th:with="data-transitiongoal=${project.progress}"></div>
                             </div>
                             <small th:text="${project.progress}">% Complete</small>
                           </td>
@@ -71,7 +71,7 @@
                             <button type="button" class="btn btn-success btn-xs">Success</button>
                           </td>
                           <td>
-                            <a th:href="@{project_detail}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                            <a th:href="@{/projectDetails(id=${project.idproject})}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
                             <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
                             <a th:href="@{/deleteProject(id=${project.idproject})}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
                           </td>
