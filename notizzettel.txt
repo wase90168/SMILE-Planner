@@ -13,7 +13,11 @@ createNewProject.html
 
 16.06.2017 - David
 ----------------------------
+<<<<<<< HEAD
 - createNewWorkpackage (controller, repository (x), model (x), HTML!(x))
+=======
+- createNewWorkpackage (controller, repository, model, HTML) - erledigt
+>>>>>>> origin/master
 - Models für die anderen DB-Objekte
 - Beziehungen zwischen den Tabellen/Modellen (Sebastian anrufen)
 

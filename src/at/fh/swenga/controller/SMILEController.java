@@ -76,7 +76,7 @@ public class SMILEController {
 	 */
 	@RequestMapping(value = {"/newWorkpackage"}, method = RequestMethod.POST)
 	@Transactional
-	public String newProject(Model model,
+	public String newWorkpackage(Model model,
 			@RequestParam String workpackageName, @RequestParam String description, @RequestParam String responsible, 
 			@RequestParam String costs, @RequestParam String progress) {
 		
@@ -115,6 +115,12 @@ public class SMILEController {
 	@RequestMapping(value = { "/project_detail" })
 	public String forwardProjectDetailsPage() {
 		return "project_detail";
+	}
+	
+	// No idea what I#m doing but it seems to work...
+	@RequestMapping(value = { "/workpackage_detail" })
+	public String forwardWorkpackageDetail() {
+		return "workpackage_detail";
 	}
 	
 	// No idea what I#m doing but it seems to work...
