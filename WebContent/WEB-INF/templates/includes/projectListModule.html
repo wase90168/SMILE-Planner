@@ -27,7 +27,6 @@
                         <tr>
                           <th style="width: 1%">#</th>
                           <th style="width: 20%">Project Name</th>
-                          <th>Project Leader</th>
                           <th>Project Progress</th>
                           <th>Project Description</th>
                           <th>Project Budget</th>
@@ -41,22 +40,6 @@
                         <tr th:each="project : ${#request.getAttribute('projects')}">
                           <td>#</td>
                           <td th:text="${project.name}">
-                          </td>
-                          <td>
-                            <ul class="list-inline">
-                              <li>
-                                <img src="images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                              <li>
-                                <img src="images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                              <li>
-                                <img src="images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                              <li>
-                                <img src="images/user.png" class="avatar" alt="Avatar">
-                              </li>
-                            </ul>
                           </td>
                           <td class="project_progress">
                             <div class="progress progress_sm">
