@@ -92,9 +92,10 @@ public class SMILEController {
 
 		int newProgress = Integer.parseInt(progress);
 		Float newCosts = Float.parseFloat(costs);
+		String modus = "Not started";
 
 		WorkpackageModel wm = new WorkpackageModel(workpackageName, durationHours, newCosts, description, status,
-				newProgress, plannedBegin, actualBegin, plannedEnd, actualEnd, project);
+				newProgress, plannedBegin, actualBegin, plannedEnd, actualEnd, project, modus);
 		workpackageRepository.save(wm);
 
 		return "forward:/projectDetails";
@@ -137,7 +138,7 @@ public class SMILEController {
 	@RequestMapping(value = { "/deleteWorkpackage"})
 	public String deleteWorkpackage(Model model, @RequestParam long id) {
 		workpackageRepository.removeByIdworkpackages(id);
-		return "project_detail";
+		return "forward:/projectDetails?id=" + id;
 	}
 
 	// No idea what I#m doing but it seems to work...
@@ -188,7 +189,7 @@ public class SMILEController {
 	}
 	
 	@RequestMapping(value = { "/updateWorkpackage" }, method = RequestMethod.POST)
-	public String updateWorkpackage(Model model, @RequestParam String progress, @RequestParam String duration, @RequestParam String current_costs, @RequestParam String id, @RequestParam String id2) {
+	public String updateWorkpackage(Model model, @RequestParam String progress, @RequestParam String duration, @RequestParam String current_costs, @RequestParam String mode,@RequestParam String id, @RequestParam String id2) {
 		long newId = Long.valueOf(id);
 		float newProgress = Float.parseFloat(progress);
 		float newCosts = Float.parseFloat(current_costs);
@@ -198,36 +199,35 @@ public class SMILEController {
 		wp.setCost(newCosts);
 		long newId2 = Long.valueOf(id2);
 		model.addAttribute("project",projectRepository.findProjectByIdproject(newId2));
-		System.out.println(wp.getCost());
+		
+		String modus = null;
+		
+		switch (mode) {
+		case "Not started":
+			modus = "Not started";
+			break;
+		case "In progress":
+			modus = "In progress";
+			break;
+		case "Done":
+			modus = "Done";
+			break;
+		case "Delayed":
+			modus = "Delayed";
+			break;
+		case "Waiting":
+			modus = "Waiting";
+			break;
+		default:
+			modus = "Not started";
+		}
+		
+		wp.setModus(modus);
+		
 		workpackageRepository.save(wp);
-		return "forward:/workpackage_detail";
-	}
-	/*
-	@RequestMapping(value = { "/updateWorkpackage" }, method = RequestMethod.POST)
-	public String updateWorkpackage(@Valid @ModelAttribute WorkpackageModel changedWorkpackageModel, BindingResult bindingResult, Model model) {
-		long id = 1;
-		WorkpackageModel wp = workpackageRepository.findWorkpackageByIdworkpackages(id);
-		wp.setProgress(changedWorkpackageModel.getProgress());
-		wp.setDurationHours(changedWorkpackageModel.getDurationHours());
-		wp.setCost(changedWorkpackageModel.getCost());
 		
-		
-		
-		return "forward:/projectDetails";
-	}
-	*/
-	@RequestMapping("/fillEmployeeList")
-	public String fillEmployeeList() {
-
-		Calendar now = Calendar.getInstance();
-		employeeManager.addEmployee(new EmployeeModel(1, "Max", "Mustermann", now));
-		employeeManager.addEmployee(new EmployeeModel(2, "Mario", "Rossi", now));
-		employeeManager.addEmployee(new EmployeeModel(3, "John", "Doe", now));
-		employeeManager.addEmployee(new EmployeeModel(4, "Jane", "Doe", now));
-		employeeManager.addEmployee(new EmployeeModel(5, "Maria", "Noname", now));
-		employeeManager.addEmployee(new EmployeeModel(6, "Josef", "Noname", now));
-
-		return "forward:/index";
+		String forwardString = "forward:/projectDetails?id=" + id2;
+		return forwardString;
 	}
 
 	@RequestMapping("/deleteProject")
@@ -236,100 +236,7 @@ public class SMILEController {
 		return "forward:index";
 	}
 
-	@RequestMapping("/searchEmployees")
-	public String search(Model model, @RequestParam String searchString) {
-		model.addAttribute("employees", employeeManager.getFilteredEmployees(searchString));
-		return "listEmployees";
-	}
 
-	@RequestMapping(value = "/addEmployee", method = RequestMethod.GET)
-	public String showAddEmployeeForm(Model model) {
-		return "editEmployee";
-	}
-
-	@RequestMapping(value = "/addEmployee", method = RequestMethod.POST)
-	public String addEmployee(@Valid @ModelAttribute EmployeeModel newEmployeeModel, BindingResult bindingResult,
-			Model model) {
-
-		if (bindingResult.hasErrors()) {
-			String errorMessage = "";
-			for (FieldError fieldError : bindingResult.getFieldErrors()) {
-				errorMessage += fieldError.getField() + " is invalid<br>";
-			}
-			model.addAttribute("errorMessage", errorMessage);
-			return "forward:/listEmployees";
-		}
-
-		EmployeeModel employee = employeeManager.getEmployeeBySSN(newEmployeeModel.getSsn());
-
-		if (employee != null) {
-			model.addAttribute("errorMessage", "Employee already exists!<br>");
-		} else {
-			employeeManager.addEmployee(newEmployeeModel);
-			model.addAttribute("message", "New employee " + newEmployeeModel.getSsn() + " added.");
-		}
-
-		return "forward:/listEmployees";
-	}
-
-	@RequestMapping(value = "/editEmployee", method = RequestMethod.GET)
-	public String showChangeEmployeeForm(Model model, @RequestParam int ssn) {
-		EmployeeModel employee = employeeManager.getEmployeeBySSN(ssn);
-		if (employee != null) {
-			model.addAttribute("employee", employee);
-			return "editEmployee";
-		} else {
-			model.addAttribute("errorMessage", "Couldn't find employee " + ssn);
-			return "forward:/listEmployees";
-		}
-	}
-
-	@RequestMapping(value = "/editEmployee", method = RequestMethod.POST)
-	public String changeEmployee(@Valid @ModelAttribute EmployeeModel changedEmployeeModel, BindingResult bindingResult,
-			Model model) {
-
-		if (bindingResult.hasErrors()) {
-			String errorMessage = "";
-			for (FieldError fieldError : bindingResult.getFieldErrors()) {
-				errorMessage += fieldError.getField() + " is invalid<br>";
-			}
-			model.addAttribute("errorMessage", errorMessage);
-			return "forward:/listEmployees";
-		}
-
-		EmployeeModel employee = employeeManager.getEmployeeBySSN(changedEmployeeModel.getSsn());
-
-		if (employee == null) {
-			model.addAttribute("errorMessage", "Employee does not exist!<br>");
-		} else {
-			employee.setSsn(changedEmployeeModel.getSsn());
-			employee.setFirstName(changedEmployeeModel.getFirstName());
-			employee.setLastName(changedEmployeeModel.getLastName());
-			employee.setDayOfBirth(changedEmployeeModel.getDayOfBirth());
-			model.addAttribute("message", "Changed employee " + changedEmployeeModel.getSsn());
-		}
-
-		return "forward:/listEmployees";
-	}
-
-	/*
-	 * @RequestMapping(value = "/sanitize", method = RequestMethod.GET) public
-	 * String testSanitization(Model model) { // Teststrings: // <p><a
-	 * href='http://example.com/' onclick='stealCookies()'>Link</a></p> // <img
-	 * src='http://placehold.it/350x150' /> //
-	 * <script>alert(document.cookie)</script> //
-	 * 
-	 * String unsanitized =
-	 * "<p><a href='http://example.com/' onclick='stealCookies()'>Link</a></p>";
-	 * String sanitized = Jsoup.clean(unsanitized, Whitelist.basic());
-	 * 
-	 * // Whitelist Values:
-	 * http://jsoup.org/apidocs/org/jsoup/safety/Whitelist.html
-	 * 
-	 * model.addAttribute("sanitized", sanitized);
-	 * model.addAttribute("unsanitized", unsanitized); return
-	 * "testSanitization"; }
-	 */
 	@ExceptionHandler(Exception.class)
 	public String handleAllException(Exception ex) {
 		return "showError";

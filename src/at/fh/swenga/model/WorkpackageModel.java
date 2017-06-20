@@ -51,13 +51,16 @@ public class WorkpackageModel implements java.io.Serializable {
 	
 	@Column(nullable = true, length = 45)
 	private String actualEnd;
+	
+	@Column(nullable = true, length = 45)
+	private String modus;
 
 	public WorkpackageModel() {
 		super();
 	}
 
 	public WorkpackageModel(String name, String durationHours, float cost, String description, int status, int progress,
-			String plannedBegin, String actualBegin, String plannedEnd, String actualEnd, ProjectModel project) {
+			String plannedBegin, String actualBegin, String plannedEnd, String actualEnd, ProjectModel project, String modus) {
 		super();
 		this.name = name;
 		this.durationHours = durationHours;
@@ -70,6 +73,7 @@ public class WorkpackageModel implements java.io.Serializable {
 		this.plannedEnd = plannedEnd;
 		this.actualEnd = actualEnd;
 		this.project = project;
+		this.modus = modus;
 	}
 
 	public long getIdworkpackages() {
@@ -167,7 +171,14 @@ public class WorkpackageModel implements java.io.Serializable {
 	public void setProject(ProjectModel project) {
 		this.project = project;
 	}
-	
+
+	public String getModus() {
+		return modus;
+	}
+
+	public void setModus(String modus) {
+		this.modus = modus;
+	}
 	
 	
 }

@@ -49,7 +49,7 @@
                           <td th:text="${wp.durationHours}"></td>
                           <td th:text="${wp.status}"></td>
                           <td>
-                            <button type="button" class="btn btn-success btn-xs">Success</button>
+                            <button type="button" class="btn btn-success btn-xs" th:text="${wp.modus}"></button>
                           </td>
                           <td>
                             <a th:href="@{workpackage_detail(id=${wp.idworkpackages},id2=${project.idproject})}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
