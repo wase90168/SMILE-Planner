@@ -54,7 +54,7 @@ public class WorkpackageModel implements java.io.Serializable {
 	
 	@Column(nullable = true, length = 45)
 	private String modus;
-
+	
 	public WorkpackageModel() {
 		super();
 	}

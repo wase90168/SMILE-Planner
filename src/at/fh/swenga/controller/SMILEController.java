@@ -1,11 +1,9 @@
 package at.fh.swenga.controller;
 
-import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -14,10 +12,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +21,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import at.fh.swenga.dao.ProjectRepository;
 import at.fh.swenga.dao.WorkpackageRepository;
 import at.fh.swenga.model.EmployeeManager;
-import at.fh.swenga.model.EmployeeModel;
 import at.fh.swenga.model.ProjectModel;
 import at.fh.swenga.model.WorkpackageModel;
 
@@ -68,8 +62,6 @@ public class SMILEController {
 		return "forward:/index";
 
 	}
-	
-	
 
 	/*
 	 * add new Workpackage
@@ -77,8 +69,7 @@ public class SMILEController {
 	@RequestMapping(value = { "/newWorkpackage" }, method = RequestMethod.POST)
 	@Transactional
 	public String newWorkpackage(Model model, @RequestParam String workpackageName, @RequestParam String description,
-			@RequestParam String responsible, @RequestParam String costs, @RequestParam String progress,
-			@RequestParam long id) {
+			@RequestParam String responsible, @RequestParam String costs, @RequestParam String progress, @RequestParam long id) {
 
 		/* Fields that are not in html form are added manually */
 		String durationHours = "24";
@@ -123,8 +114,8 @@ public class SMILEController {
 
 		model.addAttribute("workpackages", workpackages);
 		model.addAttribute("project", project);
-		
-		//Total amount of project
+
+		// Total amount of project
 		float amount = 0;
 		for (int x = 0; x < workpackages.size(); x = x + 1) {
 			WorkpackageModel wp = workpackages.get(x);
@@ -133,9 +124,9 @@ public class SMILEController {
 		model.addAttribute("totalCost", amount);
 		return "project_detail";
 	}
-	
-	//delete Workpackage
-	@RequestMapping(value = { "/deleteWorkpackage"})
+
+	// delete Workpackage
+	@RequestMapping(value = { "/deleteWorkpackage" })
 	public String deleteWorkpackage(Model model, @RequestParam long id) {
 		workpackageRepository.removeByIdworkpackages(id);
 		return "forward:/projectDetails?id=" + id;
@@ -164,15 +155,45 @@ public class SMILEController {
 		return "createNewProject";
 	}
 
+	@RequestMapping(value = { "/editWorkpackage" }, method = RequestMethod.GET)
+	public String editWorkpackage(Model model, @RequestParam long id, @RequestParam long id2) {
+		WorkpackageModel wp = workpackageRepository.findWorkpackageByIdworkpackages(id);
+		ProjectModel project = projectRepository.findProjectByIdproject(id2);
+		model.addAttribute("project",project);
+		model.addAttribute("wp", wp);
+		return "createNewWorkpackage";
+	}
+
+	@RequestMapping(value = { "/editWorkpackage" }, method = RequestMethod.POST)
+	@Transactional
+	public String editWorkpackage(Model model, @RequestParam String workpackageName, @RequestParam String description,
+			@RequestParam String responsible, @RequestParam String costs, @RequestParam String progress,
+			@RequestParam long id2) {
+
+		WorkpackageModel change = workpackageRepository.findWorkpackageByIdworkpackages(id2);
+		
+		long projectID = change.getProject().getIdproject();
+
+		change.setName(workpackageName);
+		change.setDescription(description);
+		change.setCost(Float.parseFloat(costs));
+		change.setProgress(Float.valueOf(progress));
+		workpackageRepository.save(change);
+		String forwardString = "forward:/projectDetails?id=" + projectID;
+		return forwardString;
+
+	}
+
 	// Method to update the project details
 	@RequestMapping(value = { "/updateProject" }, method = RequestMethod.POST)
 	@Transactional
 	public String updateProject(Model model, @RequestParam String projectName, @RequestParam String budget,
 			/* @RequestParam String deadline,@RequestParam String plannedEnd, */ @RequestParam String description,
-			/* @RequestParam String status, @RequestParam String lastChange, */ @RequestParam String progress, @RequestParam long id) {
+			/* @RequestParam String status, @RequestParam String lastChange, */ @RequestParam String progress,
+			@RequestParam long id) {
 
 		ProjectModel project = projectRepository.findProjectByIdproject(id);
-		
+
 		project.setName(projectName);
 		project.setDescription(description);
 		project.setBudget(Float.valueOf(budget));
@@ -187,9 +208,11 @@ public class SMILEController {
 		model.addAttribute("project", project);
 		return "createNewWorkpackage";
 	}
-	
+
 	@RequestMapping(value = { "/updateWorkpackage" }, method = RequestMethod.POST)
-	public String updateWorkpackage(Model model, @RequestParam String progress, @RequestParam String duration, @RequestParam String current_costs, @RequestParam String mode,@RequestParam String id, @RequestParam String id2) {
+	public String updateWorkpackage(Model model, @RequestParam String progress, @RequestParam String duration,
+			@RequestParam String current_costs, @RequestParam String mode, @RequestParam String id,
+			@RequestParam String id2) {
 		long newId = Long.valueOf(id);
 		float newProgress = Float.parseFloat(progress);
 		float newCosts = Float.parseFloat(current_costs);
@@ -198,10 +221,10 @@ public class SMILEController {
 		wp.setDurationHours(duration);
 		wp.setCost(newCosts);
 		long newId2 = Long.valueOf(id2);
-		model.addAttribute("project",projectRepository.findProjectByIdproject(newId2));
-		
+		model.addAttribute("project", projectRepository.findProjectByIdproject(newId2));
+
 		String modus = null;
-		
+
 		switch (mode) {
 		case "Not started":
 			modus = "Not started";
@@ -221,11 +244,11 @@ public class SMILEController {
 		default:
 			modus = "Not started";
 		}
-		
+
 		wp.setModus(modus);
-		
+
 		workpackageRepository.save(wp);
-		
+
 		String forwardString = "forward:/projectDetails?id=" + id2;
 		return forwardString;
 	}
@@ -235,7 +258,6 @@ public class SMILEController {
 		projectRepository.removeByIdproject(id);
 		return "forward:index";
 	}
-
 
 	@ExceptionHandler(Exception.class)
 	public String handleAllException(Exception ex) {
