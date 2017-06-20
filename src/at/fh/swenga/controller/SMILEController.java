@@ -198,6 +198,8 @@ public class SMILEController {
 		wp.setCost(newCosts);
 		long newId2 = Long.valueOf(id2);
 		model.addAttribute("project",projectRepository.findProjectByIdproject(newId2));
+		System.out.println(wp.getCost());
+		workpackageRepository.save(wp);
 		return "forward:/workpackage_detail";
 	}
 	/*
