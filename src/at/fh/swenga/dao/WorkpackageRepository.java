@@ -16,8 +16,10 @@ import at.fh.swenga.model.WorkpackageModel;
 @Transactional
 public interface WorkpackageRepository extends JpaRepository<WorkpackageModel, Integer>{
 
-	//@Query("select e from EmployeeModel e where e.firstName = :name or e.lastName = :name")
-	
 	public List<WorkpackageModel> findWorkpackagesByProject(ProjectModel project);
+	
+	public WorkpackageModel findWorkpackageByIdworkpackages(long id);
+	
+	public List<WorkpackageModel> removeByIdworkpackages(long id);
 	
 }

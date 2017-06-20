@@ -79,11 +79,11 @@
 							<ul class="stats-overview">
 		                        <li>
 		                          <span class="name"> Budget </span>
-		                          <span class="value text-success" th:text="${project.budget}"></span>
+		                          <span class="value text-success" th:text="${project.budget + ' Euro'}"></span>
 		                        </li>
 		                        <li>
 		                          <span class="name"> Total amount spent </span>
-		                          <span class="value text-success"> (Existiert in Class nicht)</span>
+		                          <span class="value text-success" th:text="${totalCost + ' Euro'}"> </span>
 		                        </li>
 		                        <li class="hidden-phone">
 		                          <span class="name"> Estimated project duration </span>
@@ -117,7 +117,7 @@
                         <div class="panel-body">
                          
 
-                          <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terr.</p>
+                          <p th:text="${project.description}"></p>
                           <br />
 
                           <div class="project_detail">
@@ -129,7 +129,7 @@
                             <li>Mitt Romny</li>
                             </ul>
                             <br>
-                            <a class="btn btn-info btn-md btn-block" href="./createNewProject.html">Edit</a>
+                            <a class="btn btn-info btn-md btn-block" th:href="@{/editProject(id=${project.idproject})}">Edit</a>
                           </div>
                         </div>
 

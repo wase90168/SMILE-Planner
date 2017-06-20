@@ -38,7 +38,7 @@ public class WorkpackageModel implements java.io.Serializable {
 	private int status;
 	
 	@Column(nullable = true)
-	private int progress;
+	private float progress;
 	
 	@Column(nullable = true, length = 45)
 	private String plannedBegin;
@@ -120,11 +120,11 @@ public class WorkpackageModel implements java.io.Serializable {
 		this.status = status;
 	}
 
-	public int getProgress() {
+	public float getProgress() {
 		return progress;
 	}
 
-	public void setProgress(int progress) {
+	public void setProgress(float progress) {
 		this.progress = progress;
 	}
 

@@ -137,7 +137,7 @@ public class ProjectModel implements java.io.Serializable {
 		return progress;
 	}
 
-	public void setProgress(int progress) {
+	public void setProgress(float progress) {
 		this.progress = progress;
 	}
 }
