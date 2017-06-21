@@ -13,8 +13,8 @@ import at.fh.swenga.model.ProjectModel;
 @Transactional
 public interface ProjectRepository extends JpaRepository<ProjectModel, Integer>{
 
-    public List<ProjectModel> removeByIdproject(long id);
+    public List<ProjectModel> removeByIdproject(int id);
     
-    public ProjectModel findProjectByIdproject(long id);
+    public ProjectModel findProjectByIdproject(int id);
 	
 }

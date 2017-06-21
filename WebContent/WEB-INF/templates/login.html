@@ -59,7 +59,7 @@
           </section>
         </div>
 
-        <div id="register" class="animate form registration_form">
+        <div id="register" class="animate form registration_form" th:action="@{/userreg}" method="post">
           <section class="login_content">
             <form>
               <h1>Create Account</h1>
@@ -80,7 +80,7 @@
 
               <div class="separator">
                 <p class="change_link">Already a member ? <br>
-                  <a href="#signin" class="to_register" style="font-size:120%"> Create Account </a>
+                  <a href="#signin" class="to_register" style="font-size:120%"> Login with Account </a>
                 </p>
 
                 <div class="clearfix"></div>

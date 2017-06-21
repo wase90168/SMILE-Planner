@@ -15,6 +15,7 @@
                   </div>
                   
                   <div class="x_content">
+                  <p th:text="${errorMessage}"></p>
                     <a href="./createNewProject.html">
                    	 	<button type="button" class="btn btn-success" style="float:right;">new Project</button>
 					</a>
@@ -30,6 +31,8 @@
                           <th>Project Progress</th>
                           <th>Project Description</th>
                           <th>Project Budget</th>
+                          <th>Project Duration (Days)</th>
+                          <th>Last Change</th>
                           <th>Project Deadline</th>
                           <th>Status</th>
                           <th style="width: 20%">#Edit</th>
@@ -43,12 +46,14 @@
                           </td>
                           <td class="project_progress">
                             <div class="progress progress_sm">
-                              <div class="progress-bar bg-green" role="progressbar" th:with="data-transitiongoal=${project.progress}"></div>
+                              <div class="progress-bar bg-green" role="progressbar" th:attr="data-transitiongoal=${project.progress}"></div>
                             </div>
                             <small th:text="${project.progress}">% Complete</small>
                           </td>
                           <td th:text="${project.description}"></td>
                           <td th:text="${project.budget}"></td>
+                          <td th:text="${project.duration}"></td>
+                          <td th:text="${project.lastChanged}"></td>
                           <td th:text="${project.deadline}"></td>
                           <td>
                             <button type="button" class="btn btn-success btn-xs">Success</button>

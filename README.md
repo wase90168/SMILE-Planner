@@ -1,4 +1,4 @@
-# SMILE-Planner
+﻿# SMILE-Planner
 
 ## Projektteam
 * Mischak David
@@ -19,7 +19,7 @@
 ## Installationsanleitung
 Das Projekt mit ECLIPSE öffnen und starten.
 
-Das Projekt wird unter http://localhost:8080/SMILE-Planner gestartet:
+Das Projekt wird unter http://localhost:8080/SpringSecurity/ gestartet:
 * Username: admin
 * Passwort: password
 

@@ -18,8 +18,8 @@ public interface WorkpackageRepository extends JpaRepository<WorkpackageModel, I
 
 	public List<WorkpackageModel> findWorkpackagesByProject(ProjectModel project);
 	
-	public WorkpackageModel findWorkpackageByIdworkpackages(long id);
+	public WorkpackageModel findWorkpackageByIdworkpackages(int id);
 	
-	public List<WorkpackageModel> removeByIdworkpackages(long id);
+	public List<WorkpackageModel> removeByIdworkpackages(int id);
 	
 }

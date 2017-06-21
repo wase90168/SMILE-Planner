@@ -38,11 +38,11 @@
 
                           </td>
                           <td>
-							<p>Harald Horst</p>
+							<p th:text="${wp.responsible}"></p>
                           </td>
                           <td class="project_progress">
                             <div class="progress progress_sm">
-                              <div class="progress-bar bg-green" role="progressbar" th:with="data-transitiongoal=${wp.progress}"></div>
+                              <div class="progress-bar bg-green" role="progressbar" th:attr="data-transitiongoal=${wp.progress}"></div>
                             </div>
                             <small  th:text="${wp.progress}">% Complete</small>
                           </td>

@@ -73,7 +73,7 @@
 		                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="workpackage-name">Workpackage Name <span class="required">*</span>
 		                        </label>
 		                        <div class="col-md-6 col-sm-6 col-xs-12">
-		                          <input type="text" id="workpackage-name" required="required" class="form-control col-md-7 col-xs-12" name="workpackageName" th:value="${wp} ? ${wp.name}">
+		                          <input type="text" id="workpackage-name" required="required" class="form-control col-md-7 col-xs-12" name="name" th:value="${wp} ? ${wp.name}">
 		                        </div>
 		                      </div> 
 		                      <div class="form-group">
@@ -91,14 +91,14 @@
 		                        </div>
 		                      </div>         
 		                      <div class="form-group">
-		                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="costs">Estimated Costs (&euro;)<span class="required">*</span>
+		                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="cost">Estimated Costs (&euro;)<span class="required">*</span>
 		                        </label>
 		                        <div class="col-md-6 col-sm-6 col-xs-12">
 		                          <input type="number" id="budget" min="0" required="required" class="form-control col-md-7 col-xs-12" name="costs" th:value="${wp} ? ${wp.cost}">
 		                        </div>
 		                      </div>
 		                      <div class="form-group">
-		                        <label for="duration" class="control-label col-md-3 col-sm-3 col-xs-12">Estimated project duration (days)<span class="required">*</span>
+		                        <label for="durationHours" class="control-label col-md-3 col-sm-3 col-xs-12">Estimated project duration (days)<span class="required">*</span>
 		                        </label>
 		                        <div class="col-md-6 col-sm-6 col-xs-12">
 		                          <input id="duration" class="form-control col-md-7 col-xs-12" type="text" name="progress" th:value="${wp} ? ${wp.progress}">

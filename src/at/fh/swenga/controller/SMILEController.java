@@ -1,9 +1,15 @@
 package at.fh.swenga.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -13,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,29 +43,22 @@ public class SMILEController {
 	@Autowired
 	private WorkpackageRepository workpackageRepository;
 
-	/*
-	 * add new Project
-	 */
 	@RequestMapping(value = { "/newProject" }, method = RequestMethod.POST)
 	@Transactional
-	public String newProject(Model model, @RequestParam String projectName, @RequestParam String budget,
-			/* @RequestParam String deadline,@RequestParam String plannedEnd, */ @RequestParam String description,
-			/* @RequestParam String status, @RequestParam String lastChange, */ @RequestParam String progress) {
+	public String newProject(Model model, @Valid @ModelAttribute ProjectModel project) {
 
-		/* Fields that are not in html form are added manually */
-		String status = "1";
-		String deadline = "1";
-		String plannedEnd = "2017-06-17";
-		String lastChange = "2017-06-17";
+		ProjectModel existingProject = projectRepository.findProjectByIdproject(project.getIdproject());
+		
+		if (existingProject != null) {
+			model.addAttribute("errorMessage", "Project already exists!<br/>");
+		} else {
+		project.setStatus(1);
+		project.setDeadline("<not set>");
+		project.setRealEnd("<not set>");
+		project.setLastChanged("no changes");
 
-		Float newBudget = Float.parseFloat(budget);
-		int newStatus = Integer.parseInt(status);
-		Float newProgress = Float.parseFloat(progress);
-
-		ProjectModel pm = new ProjectModel(projectName, newBudget, deadline, plannedEnd, description, newStatus,
-				lastChange, newProgress);
-		projectRepository.save(pm);
-
+		projectRepository.save(project);
+		}
 		return "forward:/index";
 
 	}
@@ -68,26 +68,21 @@ public class SMILEController {
 	 */
 	@RequestMapping(value = { "/newWorkpackage" }, method = RequestMethod.POST)
 	@Transactional
-	public String newWorkpackage(Model model, @RequestParam String workpackageName, @RequestParam String description,
-			@RequestParam String responsible, @RequestParam String costs, @RequestParam String progress, @RequestParam long id) {
+	public String newWorkpackage(Model model, @Valid @ModelAttribute WorkpackageModel workpackage, @RequestParam int id) {
 
-		/* Fields that are not in html form are added manually */
-		String durationHours = "24";
+		ProjectModel projectId = projectRepository.findProjectByIdproject(id);
+		
 		int status = 1;
-		String plannedBegin = "2017-06-17";
-		String actualBegin = "2017-06-17";
-		String plannedEnd = "2017-10-17";
-		String actualEnd = "2017-10-17";
+		DateFormat beginDate = new SimpleDateFormat("yyyy-MM-dd");
+		String actualBegin = String.valueOf(beginDate.toString());
+		
+		workpackage.setStatus(status);
+		workpackage.setActualBegin(actualBegin);
+		workpackage.setModus("Not started");
+		workpackage.setProject(projectId);
 
-		ProjectModel project = projectRepository.findProjectByIdproject(id);
+		workpackageRepository.save(workpackage);
 
-		int newProgress = Integer.parseInt(progress);
-		Float newCosts = Float.parseFloat(costs);
-		String modus = "Not started";
-
-		WorkpackageModel wm = new WorkpackageModel(workpackageName, durationHours, newCosts, description, status,
-				newProgress, plannedBegin, actualBegin, plannedEnd, actualEnd, project, modus);
-		workpackageRepository.save(wm);
 
 		return "forward:/projectDetails";
 
@@ -108,7 +103,7 @@ public class SMILEController {
 
 	// it works :)
 	@RequestMapping(value = { "/projectDetails" })
-	public String forwardProjectDetailsPage(Model model, @RequestParam long id) {
+	public String forwardProjectDetailsPage(Model model, @RequestParam int id) {
 		ProjectModel project = projectRepository.findProjectByIdproject(id);
 		List<WorkpackageModel> workpackages = workpackageRepository.findWorkpackagesByProject(project);
 
@@ -121,20 +116,23 @@ public class SMILEController {
 			WorkpackageModel wp = workpackages.get(x);
 			amount += wp.getCost();
 		}
+		
+		// project duration calculation
+		//TODO
 		model.addAttribute("totalCost", amount);
 		return "project_detail";
 	}
 
 	// delete Workpackage
 	@RequestMapping(value = { "/deleteWorkpackage" })
-	public String deleteWorkpackage(Model model, @RequestParam long id) {
+	public String deleteWorkpackage(Model model, @RequestParam int id) {
 		workpackageRepository.removeByIdworkpackages(id);
 		return "forward:/projectDetails?id=" + id;
 	}
 
 	// No idea what I#m doing but it seems to work...
 	@RequestMapping(value = { "/workpackage_detail" })
-	public String forwardWorkpackageDetail(Model model, @RequestParam long id, @RequestParam long id2) {
+	public String forwardWorkpackageDetail(Model model, @RequestParam int id, @RequestParam int id2) {
 		WorkpackageModel wp = workpackageRepository.findWorkpackageByIdworkpackages(id);
 		ProjectModel project = projectRepository.findProjectByIdproject(id2);
 		model.addAttribute("project", project);
@@ -149,14 +147,14 @@ public class SMILEController {
 	}
 
 	@RequestMapping(value = { "/editProject" })
-	public String editProject(Model model, @RequestParam long id) {
+	public String editProject(Model model, @RequestParam int id) {
 		ProjectModel project = projectRepository.findProjectByIdproject(id);
 		model.addAttribute("project", project);
 		return "createNewProject";
 	}
 
 	@RequestMapping(value = { "/editWorkpackage" }, method = RequestMethod.GET)
-	public String editWorkpackage(Model model, @RequestParam long id, @RequestParam long id2) {
+	public String editWorkpackage(Model model, @RequestParam int id, @RequestParam int id2) {
 		WorkpackageModel wp = workpackageRepository.findWorkpackageByIdworkpackages(id);
 		ProjectModel project = projectRepository.findProjectByIdproject(id2);
 		model.addAttribute("project",project);
@@ -166,44 +164,41 @@ public class SMILEController {
 
 	@RequestMapping(value = { "/editWorkpackage" }, method = RequestMethod.POST)
 	@Transactional
-	public String editWorkpackage(Model model, @RequestParam String workpackageName, @RequestParam String description,
-			@RequestParam String responsible, @RequestParam String costs, @RequestParam String progress,
-			@RequestParam long id2) {
+	public String editWorkpackage(Model model, @Valid @ModelAttribute WorkpackageModel changedWorkpackage, @RequestParam int id2) {
 
-		WorkpackageModel change = workpackageRepository.findWorkpackageByIdworkpackages(id2);
+		WorkpackageModel wp = workpackageRepository.findWorkpackageByIdworkpackages(changedWorkpackage.getIdworkpackages());
+		int projectId = wp.getProject().getIdproject();
 		
-		long projectID = change.getProject().getIdproject();
-
-		change.setName(workpackageName);
-		change.setDescription(description);
-		change.setCost(Float.parseFloat(costs));
-		change.setProgress(Float.valueOf(progress));
-		workpackageRepository.save(change);
-		String forwardString = "forward:/projectDetails?id=" + projectID;
-		return forwardString;
-
+		wp.setName(changedWorkpackage.getName());
+		wp.setDescription(changedWorkpackage.getDescription());
+		wp.setCost(changedWorkpackage.getCost());
+		wp.setProgress(changedWorkpackage.getProgress());
+		workpackageRepository.save(wp);
+		
+		return "forward:/projectDetails?id=" + projectId;
 	}
 
 	// Method to update the project details
 	@RequestMapping(value = { "/updateProject" }, method = RequestMethod.POST)
 	@Transactional
-	public String updateProject(Model model, @RequestParam String projectName, @RequestParam String budget,
-			/* @RequestParam String deadline,@RequestParam String plannedEnd, */ @RequestParam String description,
-			/* @RequestParam String status, @RequestParam String lastChange, */ @RequestParam String progress,
-			@RequestParam long id) {
+	public String updateProject(Model model, @Valid @ModelAttribute ProjectModel changedProject, @RequestParam int id) {
 
 		ProjectModel project = projectRepository.findProjectByIdproject(id);
 
-		project.setName(projectName);
-		project.setDescription(description);
-		project.setBudget(Float.valueOf(budget));
-		project.setProgress(Float.valueOf(progress));
-
+		project.setName(changedProject.getName());
+		project.setDescription(changedProject.getDescription());
+		project.setBudget(Float.valueOf(changedProject.getBudget()));
+		project.setProgress(Float.valueOf(changedProject.getProgress()));
+		//Last Change
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = new Date();
+		project.setLastChanged(dateFormat.format(date).toString());
+		
 		return "forward:/projectDetails";
 	}
 
 	@RequestMapping(value = { "/newWorkpackage" }, method = RequestMethod.GET)
-	public String forwardCreateNewWorkpackage(Model model, @RequestParam long id) {
+	public String forwardCreateNewWorkpackage(Model model, @RequestParam int id) {
 		ProjectModel project = projectRepository.findProjectByIdproject(id);
 		model.addAttribute("project", project);
 		return "createNewWorkpackage";
@@ -213,14 +208,14 @@ public class SMILEController {
 	public String updateWorkpackage(Model model, @RequestParam String progress, @RequestParam String duration,
 			@RequestParam String current_costs, @RequestParam String mode, @RequestParam String id,
 			@RequestParam String id2) {
-		long newId = Long.valueOf(id);
+		int newId = Integer.valueOf(id);
 		float newProgress = Float.parseFloat(progress);
 		float newCosts = Float.parseFloat(current_costs);
 		WorkpackageModel wp = workpackageRepository.findWorkpackageByIdworkpackages(newId);
 		wp.setProgress(newProgress);
 		wp.setDurationHours(duration);
 		wp.setCost(newCosts);
-		long newId2 = Long.valueOf(id2);
+		int newId2 = Integer.valueOf(id2);
 		model.addAttribute("project", projectRepository.findProjectByIdproject(newId2));
 
 		String modus = null;
@@ -254,7 +249,7 @@ public class SMILEController {
 	}
 
 	@RequestMapping("/deleteProject")
-	public String delete(Model model, @RequestParam long id) {
+	public String delete(Model model, @RequestParam int id) {
 		projectRepository.removeByIdproject(id);
 		return "forward:index";
 	}
@@ -276,6 +271,12 @@ public class SMILEController {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
 		return "redirect:/login";
+	}
+	//TODO: registration
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String userLogin(Model model) {
+		return "index";
 	}
 
 }
