@@ -30,3 +30,5 @@ project/plugins/project/
 .scala_dependencies
 .worksheet
 target/m2e-wtp/web-resources/META-INF/maven/SpringSecurity/SpringSecurity/pom.properties
+
+src/db.properties
